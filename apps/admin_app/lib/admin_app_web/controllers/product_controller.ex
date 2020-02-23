@@ -8,7 +8,6 @@ defmodule AdminAppWeb.ProductController do
   alias Snitch.Domain.Taxonomy
   alias Snitch.Tools.Helper.Rummage, as: RummageHelper
   alias Snitch.Domain.Inventory
-  alias Snitch.Tools.ElasticSearch.Product.Store, as: ESProductStore
 
   alias Snitch.Data.Schema.{
     ProductBrand,
@@ -156,7 +155,6 @@ defmodule AdminAppWeb.ProductController do
     product = preload_product_images(id)
 
     ProductModel.update_default_image(product, default_image)
-    ESProductStore.update_product_to_es(product)
 
     conn
     |> put_status(200)
@@ -174,7 +172,6 @@ defmodule AdminAppWeb.ProductController do
 
     case ProductModel.add_images(product, params) do
       {:ok, updated_product} ->
-        ESProductStore.update_product_to_es(updated_product)
         associated_images = product.images
         product = product |> Repo.preload(:images, force: true)
 
@@ -217,9 +214,6 @@ defmodule AdminAppWeb.ProductController do
 
     case ProductModel.delete_image(product.id, image_id) do
       {:ok, _} ->
-        product
-        |> ESProductStore.update_product_to_es()
-
         conn
         |> put_status(200)
         |> json(%{data: "success"})
@@ -263,7 +257,6 @@ defmodule AdminAppWeb.ProductController do
              "theme_id" => params["theme_id"]
            }),
          {:ok, _product} = updated_product <- Repo.update(changeset) do
-      ESProductStore.update_product_to_es(parent_product)
       redirect(conn, to: product_path(conn, :edit, params["product_id"]))
     else
       _ ->

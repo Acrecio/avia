@@ -5,6 +5,7 @@ defmodule SnitchApiWeb.AddressControllerTest do
   alias SnitchApi.Guardian
 
   setup :states
+
   # setup :countries
 
   @create_attrs %{

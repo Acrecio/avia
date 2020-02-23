@@ -38,7 +38,9 @@ config :admin_app, AdminAppWeb.Mailer,
   adapter: Swoosh.Adapters.Sendgrid,
   api_key: System.get_env("SENDGRID_API_KEY")
 
-config :pdf_generator, wkhtml_path: System.get_env("WKHTML_PATH")
+config :pdf_generator,
+  raise_on_missing_wkhtmltopdf_binary: false,
+  wkhtml_path: System.get_env("WKHTML_PATH")
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

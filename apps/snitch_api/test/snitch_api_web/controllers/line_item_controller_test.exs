@@ -4,6 +4,7 @@ defmodule SnitchApiWeb.LineItemControllerTest do
   alias Snitch.Core.Tools.MultiTenancy.Repo
   alias SnitchApi.Accounts
   import Snitch.Factory
+
   # alias Snitch.Data.Model.Order, as: OrderModel
 
   setup_all do

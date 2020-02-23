@@ -12,7 +12,6 @@ defmodule Snitch.Data.Model.Product do
   alias Snitch.Data.Schema.{Image, Product, Variation, Taxon}
   alias Snitch.Tools.Helper.ImageUploader
   alias Snitch.Core.Tools.MultiTenancy.Repo
-  alias Snitch.Tools.ElasticSearch.Product.Store, as: ESProductStore
 
   @product_states [:active, :in_active, :draft]
 
@@ -173,7 +172,6 @@ defmodule Snitch.Data.Model.Product do
   @spec update(Product.t(), map) :: {:ok, Product.t()} | {:error, Ecto.Changeset.t()}
   def update(product, params) do
     with {:ok, product} <- QH.update(Product, params, product, Repo) do
-      ESProductStore.update_product_to_es(product)
       {:ok, product}
     else
       {:error, error} -> {:error, error}
@@ -196,7 +194,6 @@ defmodule Snitch.Data.Model.Product do
   @spec get(integer) :: {:ok, Product.t()} | {:error, Ecto.Changeset.t()} | nil
   def delete(id) do
     with {:ok, %Product{} = product} <- get(id),
-         _ <- ESProductStore.update_product_to_es(product, :delete),
          changeset <- Product.delete_changeset(product) do
       product = product |> Repo.preload(:images)
       Enum.map(product.images, &delete_image(product.id, &1.id))

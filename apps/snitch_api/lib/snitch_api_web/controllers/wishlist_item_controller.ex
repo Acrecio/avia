@@ -5,6 +5,7 @@ defmodule SnitchApiWeb.WishListItemController do
   alias Snitch.Core.Tools.MultiTenancy.Repo
 
   plug(SnitchApiWeb.Plug.DataToAttributes)
+
   # plug(SnitchApiWeb.Plug.LoadUser)
 
   action_fallback(SnitchApiWeb.FallbackController)

@@ -10,6 +10,7 @@ defmodule Snitch.Data.Model.Image do
   alias Ecto.Multi
 
   @cwd File.cwd!()
+  @base_url Application.get_env(:snitch_core, Snitch.BaseUrl)[:backend_url]
 
   def create(module, %{"image" => image} = params, association) do
     multi =
@@ -125,11 +126,9 @@ defmodule Snitch.Data.Model.Image do
   end
 
   def image_url(name, struct, version \\ :thumb) do
-    base_url = System.get_env("BACKEND_URL")
-
     case Mix.env() do
       :dev ->
-        base_url <> get_image(name, struct, version)
+        @base_url <> get_image(name, struct, version)
 
       _ ->
         get_image(name, struct, version)

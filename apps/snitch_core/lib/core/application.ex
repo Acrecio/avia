@@ -13,7 +13,6 @@ defmodule Snitch.Application do
       Supervisor.start_link(
         [
           supervisor(Snitch.Repo, []),
-          supervisor(Snitch.Tools.ElasticsearchCluster, []),
           worker(Cachex, [:avia_cache, [limit: 1000]]),
           supervisor(Task.Supervisor, [[name: MailManager.TaskSupervisor]]),
           worker(MailManager, [[name: MailManager]])

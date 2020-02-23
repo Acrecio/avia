@@ -6,7 +6,6 @@ defmodule Snitch.Data.Model.ProductReview do
   alias Ecto.Multi
   use Snitch.Data.Model
   alias Snitch.Data.Schema.{ProductReview, RatingOption, Review, Product}
-  alias Snitch.Tools.ElasticSearch.Product.Store, as: ESProductStore
 
   @review_detail %{
     average_rating: 0,
@@ -44,9 +43,7 @@ defmodule Snitch.Data.Model.ProductReview do
     |> Multi.run(:associate_product, fn %{review: review} ->
       %{product_id: product_id} = params
       params = %{product_id: product_id, review_id: review.id}
-      return = QH.create(ProductReview, params, Repo)
-      ESProductStore.update_product_to_es(Repo.get(Product, product_id))
-      return
+      QH.create(ProductReview, params, Repo)
     end)
     |> persist()
   end

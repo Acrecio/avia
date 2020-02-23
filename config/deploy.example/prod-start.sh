@@ -13,7 +13,6 @@ until
     --build-arg HOSTED_PAYMENT_URL=$HOSTED_PAYMENT_URL \
     --build-arg SENDGRID_SENDER_EMAIL=$SENDGRID_SENDER_EMAIL \
     --build-arg SENDGRID_API_KEY=$SENDGRID_API_KEY \
-    --build-arg ELASTIC_HOST=$ELASTIC_HOST \
     . -f ./config/docker/prod/Dockerfile; do
   echo Docker build failed, retrying in 1 seconds...
   sleep 1
