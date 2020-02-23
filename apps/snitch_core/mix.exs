@@ -11,7 +11,7 @@ defmodule Snitch.Core.Mixfile do
       config_path: "../../config/config.exs",
       deps_path: "../../deps",
       lockfile: "../../mix.lock",
-      elixir: "~> 1.7.2",
+      elixir: "~> 1.10",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
@@ -50,7 +50,7 @@ defmodule Snitch.Core.Mixfile do
       {:combination, "~> 0.0.3"},
       {:bamboo_smtp, "~> 1.6.0"},
       {:bamboo_eex, "~> 0.1.0"},
-      {:ex_money, "~> 2.6.0"},
+      {:ex_money, "~> 3.4"},
       {:rummage_ecto, "~> 2.0.0-rc.0"},
       {:credo, "~> 0.9.1", only: :dev, runtime: false},
       {:credo_contrib, "~> 0.1.0-rc3", only: :dev, runtime: false},
@@ -114,7 +114,7 @@ defmodule Snitch.Core.Mixfile do
       {:ecto_enum, "~> 1.0"},
 
       # Elastic search integration
-      {:elasticsearch, "~> 0.6.0"},
+      # {:elasticsearch, "~> 0.6.0"},
 
       # Caching
       {:cachex, "~> 3.1"}
